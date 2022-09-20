@@ -1,0 +1,94 @@
+:root {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.8rem;
+  padding: 0px 50px 0px 50px;
+  background-color: rgb(226, 247, 255);
+}
+
+.login_page {
+  width: 400px;
+  padding: 3.5% 0 0;
+  margin: auto;
+}
+.login_page .form .login {
+  margin-top: -31px;
+  margin-bottom: 26px;
+}
+
+.login_header h1 {
+  margin-bottom: 30px;
+}
+
+.form {
+  position: relative;
+  z-index: 1;
+  background: #ffffff;
+  max-width: 360px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+
+.signup_btn {
+  background-color: initial;
+  background-image: linear-gradient(-180deg, #ff7e31, #e62c03);
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 2px 4px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Inter, -apple-system, system-ui, Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  font-size: large;
+  height: 40px;
+  line-height: 40px;
+  outline: 0;
+  overflow: hidden;
+  padding: 0 20px;
+  pointer-events: auto;
+  position: relative;
+  text-align: center;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  vertical-align: top;
+  white-space: nowrap;
+  width: 100%;
+  z-index: 9;
+  border: 0;
+  transition: box-shadow 0.2s;
+  margin-bottom: 20px;
+  border-radius: 100px;
+}
+
+.signup_btn:hover {
+  box-shadow: rgba(253, 76, 0, 0.5) 0 3px 8px;
+}
+
+input {
+  width: 73%;
+  padding: 12px 20px;
+  margin: 5px 0 20px 0;
+  box-sizing: border-box;
+  background-color: rgb(176, 225, 247);
+
+  border: none;
+  border-bottom: 2px solid rgb(55, 170, 219);
+  border-radius: 100px;
+}
+input:focus {
+  width: 100%;
+}
