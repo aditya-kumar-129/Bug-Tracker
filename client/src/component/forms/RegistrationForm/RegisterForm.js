@@ -78,7 +78,7 @@ const RegisterForm = () => {
                   required
                 />
                 <label htmlFor="email">
-                  <b>EMail</b>
+                  <b>Email</b>
                 </label>
                 <input
                   type="text"
