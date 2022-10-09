@@ -99,3 +99,113 @@ export const addProject = async (
     return err;
   }
 };
+
+export const getBugData = async (id) => {
+  let response;
+  try {
+    response = await axios.get(`${URL}/getBugInfo`, {
+      params: {
+        id: id,
+      },
+    });
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deleteBug = async (bugID) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/deletebug`,
+      {
+        bugID: bugID,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const assignBug = async (bugID, userName) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/assignbug`,
+      {
+        bugID: bugID,
+        assignedTo: userName,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const closeBug = async (bugID) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/closebug`,
+      {
+        bugID: bugID,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateBug = async (
+  bugTitle,
+  bugDescription,
+  bugSeverity,
+  bugDueDate,
+  bugID
+) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/editbug`,
+      {
+        bugID: bugID,
+        bugTitle: bugTitle,
+        bugDescription: bugDescription,
+        bugDueDate: bugDueDate,
+        bugSeverity: bugSeverity,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+

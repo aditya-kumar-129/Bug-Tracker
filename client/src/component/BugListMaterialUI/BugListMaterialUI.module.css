@@ -1,0 +1,21 @@
+.detailpaper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 1.5em;
+  padding: 1.5em;
+}
+
+.mainbugrow {
+  background-color: #d23e19bd;
+}
+
+.bugtablebody {
+  background-color: rgb(255, 226, 226);
+}
+
+.bugtablerow{
+  cursor: pointer;
+}
