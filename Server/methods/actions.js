@@ -124,10 +124,8 @@ const addProject = (req, res) => {
   });
 
   newProject.save(function (err, savedProject) {
-    if (err) {
-      console.log(err);
-      res.json({ success: false, msg: "Failed to save" });
-    } else res.send(savedProject);
+    if (err) res.json({ success: false, msg: "Failed to save" });
+    else res.send(savedProject);
   });
 };
 
@@ -149,6 +147,93 @@ const editProject = (req, res) => {
   );
 };
 
+const addBug = (req, res) => {
+  let projectID = req.body.projectID;
+  let userName = helper.getUserId(req).username;
+  let newBug = Bug({
+    projectID: projectID,
+    createdBy: userName,
+    bugTitle: req.body.bugTitle,
+    bugDescription: req.body.bugDescription,
+    bugStatus: "Open",
+    bugSeverity: req.body.bugSeverity,
+    bugDueDate: req.body.bugDueDate,
+  });
+  newBug.save((err, savedBug) => {
+    if (err) res.json({ success: false, msg: err });
+    // If you already have a bug for a project then we just have to push the current bug in that array.
+    else {
+      Project.findOneAndUpdate(
+        { _id: projectID },
+        { $push: { bugs: savedBug._id } },
+        (err, project) => {
+          if (err) res.send(err);
+        }
+      );
+    }
+  });
+};
+
+const addDeveloper = (req, res) => {
+  let developer = req.body.developer;
+  let projectID = req.body.projectID;
+  Project.findOneAndUpdate(
+    { _id: projectID },
+    // https://www.mongodb.com/docs/manual/reference/operator/update/addToSet/
+    { $addToSet: { projectDevelopers: developer } },
+    { returnNewDocument: true },
+    (err, project) => {
+      if (err) res.send(err);
+      else res.json({ projectDetail: project });
+    }
+  );
+};
+
+const assignBug = (req, res) => {
+  let bugID = req.body.bugID;
+  let assignedTo = req.body.assignedTo;
+  let bd, ud;
+  Bug.findOneAndUpdate(
+    { _id: bugID },
+    { $addToSet: { assignedTo: assignedTo } },
+    { returnNewDocument: true },
+    (err, bugs) => {
+      if (err) res.send(err);
+      else {
+        Project.findOneAndUpdate(
+          { _id: bugs.projectID },
+          { $addToSet: { projectDevelopers: assignedTo } },
+          { returnNewDocument: true },
+          (err, project) => {
+            if (err) res.send(err);
+            else res.send({ projectDetail: project, ...ud, ...bd });
+          }
+        );
+      }
+    }
+  );
+};
+
+const editBug = (req, res) => {
+  let bugID = req.body.bugID;
+  Bug.findOneAndUpdate(
+    { _id: bugID },
+    {
+      $set: {
+        bugTitle: req.body.bugTitle,
+        bugDescription: req.body.bugDescription,
+        bugSeverity: req.body.bugSeverity,
+        bugDueDate: req.body.bugDueDate,
+      },
+    },
+    { returnNewDocument: true },
+    (err, bugs) => {
+      if (err) res.send(err);
+      else bd = { bugDetail: bugs };
+    }
+  );
+};
+
 module.exports = {
   signUp,
   login,
@@ -160,4 +245,8 @@ module.exports = {
   getBugInfo,
   addProject,
   editProject,
+  addBug,
+  addDeveloper,
+  assignBug,
+  editBug,
 };
