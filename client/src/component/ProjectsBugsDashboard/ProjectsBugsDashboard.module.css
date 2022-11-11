@@ -1,0 +1,65 @@
+.jss17 {
+  display: flex;
+  padding: 0.8em 1.5em;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.detaildiv {
+  padding-left: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.detailpaper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  margin-bottom: 1.5em;
+  padding: 1.5em;
+}
+
+.green_btn {
+  background-color: #c2f0fb;
+  border-radius: 100px;
+  box-shadow: rgba(44, 170, 187, 0.2) 0 -25px 18px -14px inset,
+    rgba(44, 146, 187, 0.15) 0 1px 2px, rgba(44, 146, 187, 0.15) 0 2px 4px,
+    rgba(44, 130, 187, 0.15) 0 4px 8px, rgba(44, 154, 187, 0.15) 0 8px 16px,
+    rgba(44, 130, 187, 0.15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular, -apple-system, system-ui, Roboto, sans-serif;
+  padding: 7px 10px;
+  width: 150px;
+  margin:20px;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 10px;
+}
+
+.green_btn:hover {
+  box-shadow: rgba(44, 130, 187, 0.35) 0 -25px 18px -14px inset,
+    rgba(44, 177, 187, 0.25) 0 1px 2px, rgba(44, 158, 187, 0.25) 0 2px 4px,
+    rgba(44, 123, 187, 0.25) 0 4px 8px, rgba(195, 223, 228, 0.25) 0 8px 16px,
+    rgba(44, 187, 187, 0.25) 0 16px 32px;
+}
+
+.mainrow {
+  background-color: #19add2;
+}
+
+.projecttablebody {
+  background-color: rgb(226, 247, 255);
+}
+
+.projecttablerow{
+  cursor: pointer;
+}

@@ -1,4 +1,4 @@
-const axios = require("axios");
+import axios from "axios";
 const URL = "http://localhost:5000";
 
 export const registerUser = async (name, username, userEmail, userPassword) => {
@@ -31,13 +31,13 @@ export const loginUser = async (userEmail, userPassword) => {
 
 export const getUserData = async () => {
   let response;
-  console.log(localStorage.getItem("token"));
   try {
     response = await axios.get(`${URL}/getInfo`, {
       headers: {
         authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
+    console.log(response.data);
     return response.data;
   } catch (err) {
     return err;
@@ -209,3 +209,153 @@ export const updateBug = async (
   }
 };
 
+export const getProjectData = async (projectID) => {
+  let response;
+  try {
+    response = await axios.get(`${URL}/getprojectinfo`, {
+      params: {
+        projectID: projectID,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getBugsForAProject = async (projectID) => {
+  let response;
+  try {
+    response = await axios.get(`${URL}/getbugsforaproject`, {
+      params: {
+        projectID: projectID,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export const addDeveloper = async (username, projectID) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/addDeveloper`,
+      {
+        developer: username,
+        projectID: projectID,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const deleteProject = async (projectID, bugs) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/deleteproject`,
+      {
+        projectID: projectID,
+        bugs: bugs,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const updateProject = async (
+  projectID,
+  projectTitle,
+  projectDescription
+) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/editproject`,
+      {
+        projectID: projectID,
+        projectTitle: projectTitle,
+        projectDescription: projectDescription,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const closeProject = async (projectID) => {
+  let response;
+  try {
+    response = await axios.post(
+      `${URL}/closeProject`,
+      {
+        projectID: projectID,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getProjects = async () => {
+  let response;
+  try {
+    response = await axios.get(`${URL}/getprojectsforauser`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};
+
+export const getBugs = async () => {
+  let response;
+  try {
+    response = await axios.get(`${URL}/getbugsforauser`, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
+    console.log(response.data);
+    return response.data;
+  } catch (err) {
+    return err;
+  }
+};

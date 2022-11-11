@@ -1,23 +1,26 @@
 import "./App.css";
-import BugDetail from "./component/BugDetail/BugDetail";
-// import BugList from "./component/BugList/BugList";
-// import { AddProjectForm } from "./component/AddProjectForm/AddProjectForm";
-// import { AddBugForm } from "./component/AddBugForm/AddBugForm";
-// import { RegisterForm } from "./component/forms/RegistrationForm/RegisterForm";
-// import { LoginForm } from "./component/forms/LoginForm/LoginForm";
-// import NavBar from "./component/navbar/Navbar";
+import DashBoard from "./pages/DashBoard";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Welcome from "./pages/Welcome";
+import Project from "./pages/Project";
+import AddProject from "./pages/AddProject";
+import AddBug from "./pages/AddBug";
+import Bug from "./pages/Bug";
+import {Route,Routes} from "react-router-dom";
 
 function App() {
   return (
-    <div>
-      {/* <RegisterForm /> */}
-      {/* <AddBugForm/> */}
-      {/* <LoginForm /> */}
-      {/* <NavBar /> */}
-      {/* <AddProjectForm /> */}
-      {/* <BugList/> */}
-      <BugDetail />
-    </div>
+    <Routes>
+      <Route exact path="/" element={<Welcome />} />
+      <Route exact path="/login" element={<Login />} />
+      <Route exact path="/register" element={<Register />} />
+      <Route exact path="/dashboard" element={<DashBoard />} />
+      <Route exact path="/project/:projectID" element={<Project />} />
+      <Route exact path="/addproject" element={<AddProject />} />
+      <Route exact path="project/:projectID/addbug" element={<AddBug />} />
+      <Route exact path="/bug/:bugID" element={<Bug />} />
+    </Routes>
   );
 }
 

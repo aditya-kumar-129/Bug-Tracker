@@ -1,6 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var bcrypt = require("bcrypt");
+
 var userSchema = new Schema({
   email: { type: String, require: true },
   password: { type: String, require: true },
@@ -26,7 +27,10 @@ userSchema.pre("save", function (next) {
 
 // https://stackoverflow.com/questions/14588032/mongoose-password-hashing
 // https://www.mongodb.com/blog/post/password-authentication-with-mongoose-part-1
-userSchema.methods.comparePassword = function (candidatePassword, callBackFunction) {
+userSchema.methods.comparePassword = function (
+  candidatePassword,
+  callBackFunction
+) {
   bcrypt.compare(candidatePassword, this.password, function (err, isMatch) {
     if (err) return callBackFunction(err);
     callBackFunction(null, isMatch);

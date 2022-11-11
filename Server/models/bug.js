@@ -1,5 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
+
 var bugSchema = new Schema({
   projectID: { type: String, require: true },
   createdBy: { type: String, require: true },

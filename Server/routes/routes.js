@@ -31,4 +31,10 @@ router.post("/editbug", actions.editBug);
 // Adding routes for adding the project , bugs and developers.
 router.post("/assignbug", actions.assignBug);
 router.post("/adddeveloper", actions.addDeveloper);
-router.post("/editBug", actions.editBug);
+router.post("/deleteProject", actions.deleteProject);
+router.post("/deleteBug", actions.deleteBug);
+router.get("/getProjectIdForABug", actions.getProjectIdForABug);
+router.post("/closebug", actions.closeBug);
+router.post("/closeproject", actions.closeProject);
+
+module.exports = router;

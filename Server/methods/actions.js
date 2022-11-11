@@ -2,6 +2,9 @@ var helper = require("./helper");
 var User = require("../models/user");
 var Project = require("../models/project");
 var Bug = require("../models/bug");
+const moment = require("moment");
+const bug = require("../models/bug");
+const project = require("../models/project");
 
 const signUp = (req, res) => {
   if (!req.body.email || !req.body.password || !req.body.username)
@@ -28,6 +31,7 @@ const signUp = (req, res) => {
         }
       }
     );
+    console.log("Registered user successfully");
   }
 };
 
@@ -39,7 +43,7 @@ const login = (req, res) => {
     else {
       user.comparePassword(req.body.password, function (err, isMatch) {
         if (isMatch && !err) {
-          token = helper.encodeToken(user._id, user.username);
+          token = encodeToken(user._id, user.username);
           res.json({ success: true, token: token });
         } else res.status(403).send({ success: false, msg: "Authentication failed" });
       });
@@ -54,10 +58,13 @@ const getInfo = (req, res) => {
     req.headers.authorization.split(" ")[0] === "Bearer"
   ) {
     let userID = helper.getUserId(req).id;
+    console.log("userID: " + userID);
     User.findById(userID, (err, data) => {
       res.json(data);
     });
-  } else res.json({ success: false, msg: "No headers" });
+  } else {
+    res.json({ success: false, msg: "No headers" });
+  }
 };
 
 const getProjectsForAUser = (req, res) => {
@@ -234,19 +241,80 @@ const editBug = (req, res) => {
   );
 };
 
+const deleteProject = (req, res) => {
+  let projectID = req.body.projectID;
+  let bugs = req.body.bugs;
+  Project.findOneAndDelete({ _id: projectID }, (err, project) => {
+    if (err) console.log(err);
+  });
+  bugs.map((bugID) => {
+    Bug.findOneAndDelete({ _id: bugID }, (err) => {
+      console.log(err);
+    });
+  });
+};
+
+const deleteBug = (req, res) => {
+  let bugID = req.body.bugID;
+  Bug.findOneAndDelete({ _id: bugID }, (err, bug) => {
+    if (err) return res.json({ succes: false, error: err });
+  });
+  Project.updateMany(
+    { $in: { bugs: bugID } },
+    { $pull: { bugs: bugID } },
+    (err, project) => {
+      if (err) res.json(err);
+    }
+  );
+};
+
+const getProjectIdForABug = (req, res) => {
+  let bugID = req.body.bugID;
+  Bug.findOne({ _id: bugID }, (err, bug) => {
+    if (err) return res.json({ succes: false, error: err });
+    else res.send(bug.projectID);
+  });
+};
+
+const closeBug = (req, res) => {
+  let bugID = req.body.bugID;
+
+  Bug.findOneAndUpdate({ _id: bugID }, { bugStatus: "Closed" }, (err, bug) => {
+    if (err) return res.json({ succes: false, error: err });
+    else res.send(bug.projectID);
+  });
+};
+
+const closeProject = (req, res) => {
+  let projectID = req.body.projectID;
+  Project.findOneAndUpdate(
+    { _id: projectID },
+    { projectStatus: "Closed" },
+    (err, project) => {
+      if (err) return res.json({ succes: false, error: err });
+      else res.send(project);
+    }
+  );
+};
+
 module.exports = {
   signUp,
   login,
-  getInfo,
-  getProjectsForAUser,
-  getProjectInfo,
-  getBugsForAUser,
-  getBugsForAProject,
-  getBugInfo,
   addProject,
-  editProject,
   addBug,
-  addDeveloper,
+  getInfo,
   assignBug,
+  getProjectInfo,
+  getBugInfo,
+  addDeveloper,
+  getProjectsForAUser,
+  getBugsForAUser,
+  editProject,
   editBug,
+  deleteProject,
+  deleteBug,
+  getProjectIdForABug,
+  closeBug,
+  getBugsForAProject,
+  closeProject,
 };
